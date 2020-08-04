@@ -326,4 +326,4 @@ def build_model_base(images, model_name, training, override_params=None):
     features = model(images, training=training, features_only=True)
 
   features = tf.identity(features, 'features')
-  return features, model.endpoints, model
+  return features, model.endpoints
