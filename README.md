@@ -36,7 +36,7 @@
 
 Trying to build the pre-trained network following [the repo](https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet) linked in the paper. 
 
-PS: almost all code in this repo are from the linked GitHub repo above. I checked out that folder only as svn and copied it here for easy testing.
+PS: almost all code in this directory are from the linked GitHub repo above. I checked out that folder only as svn and copied it here for easy testing. #test.py# is the code I put together for testing.
 
 ## Notes
 
