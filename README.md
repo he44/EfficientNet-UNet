@@ -22,6 +22,8 @@
 
 - [Efficient Net from the original author](https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet)
 
+- [Efficient Net implementation as part of keras-applications](https://github.com/keras-team/keras-applications)
+
 ## Environment
 
 - CUDA 11.0
@@ -36,7 +38,12 @@
 
 Trying to build the pre-trained network following [the repo](https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet) linked in the paper. 
 
-PS: almost all code in this directory are from the linked GitHub repo above. I checked out that folder only as svn and copied it here for easy testing. #test.py# is the code I put together for testing.
+PS: almost all code in this directory are from the linked GitHub repo above. I checked out that folder only as svn and copied it here for easy testing. **test.py** contains the code I put together for testing.
+
+### keras_application_efficientnet
+
+Trying to build a trainable U-Net with EfficientNet as encoder. All files in keras_applications are from [Efficient Net implementation as part of keras-applications](https://github.com/keras-team/keras-applications).
+
 
 ## Notes
 
@@ -184,8 +191,52 @@ And these endpoints look pretty cool. Totally see the potential for segmentation
 ![Labrador Endpont 3](tmp/labrador_first_map_in_endpoint_3.png)
 
 
+### Using Pretrained EfficientNet from Keras applications
+
+#### Getting the pre-trained weights as encoder
+
+The following code will suffice:
+
+```Python
+import tensorflow as tf
+print(tf.__version__)
+import numpy as np
+from keras_applications import efficientnet
+
+model = efficientnet.EfficientNetB0(
+    include_top=False,
+    weights='imagenet',
+    input_tensor=None,
+    input_shape=(224,224,3),
+    pooling=None,
+    classes=1,
+    backend=tf.keras.backend,
+    layers=tf.keras.layers,
+    models=tf.keras.models,
+    utils=tf.keras.utils
+)
+
+model.summary()
+
+model.save('EfficientNet-B0_keras.h5')
+```
+
+Notice that the **kwargs in the function definition are left for the last 4 arguments. I think they can also be set in the __init__.py file.
+
+Last layer and number of parameters:
+
+```
+top_activation (Activation)     (None, 7, 7, 1280)   0           top_bn[0][0]                     
+==================================================================================================
+Total params: 4,049,564
+Trainable params: 4,007,548
+Non-trainable params: 42,016
+__________________________________________________________________________________________________
+```
 
 ## TODO
 
-@TODO check out the implementation provided in the [keras-applications repo](https://github.com/keras-team/keras-applications). Seems that this repo has code that's editable in terms of model architecture. Also, it looks much cleaner (?), without too many dependencies. Most of the functions seemed to be implmemented within that same file for efficientnet.
+@DONE check out the implementation provided in the [keras-applications repo](https://github.com/keras-team/keras-applications). Seems that this repo has code that's editable in terms of model architecture. Also, it looks much cleaner (?), without too many dependencies. Most of the functions seemed to be implmemented within that same file for efficientnet.
 
+
+@TODO Add skip connections and everything else to this model. Hopefully we'll get a trainable U-Net soon.
