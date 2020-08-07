@@ -186,7 +186,11 @@ For the labrador image (original dimension 1400, 2100), the endpoints layers wil
 
 And these endpoints look pretty cool. Totally see the potential for segmentation/detection here.
 
+Activation map of the panda image after 2 max-pooling in efficient-net:
+
 ![Panda Endpoint 2](tmp/panda_first_map_in_endpoint_2.png)
+
+Activation map of the labrador image after 2 max-pooling in efficient-net:
 
 ![Labrador Endpont 3](tmp/labrador_first_map_in_endpoint_3.png)
 

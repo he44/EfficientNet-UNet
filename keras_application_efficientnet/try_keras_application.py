@@ -19,3 +19,6 @@ model = efficientnet.EfficientNetB0(
 model.summary()
 
 model.save('EfficientNet-B0_keras.h5')
+
+for layer in model.layers:
+    print(type(layer))
