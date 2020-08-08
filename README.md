@@ -238,9 +238,42 @@ Non-trainable params: 42,016
 __________________________________________________________________________________________________
 ```
 
+Appraently we can also leave the image size as (None, None, 3), which does not change the number of parameters at all. 
+It only cares about the channel dimension. 
+
+Let's take a look at all the layers and their shape:
+
+```
+block1a_project_bn (?, 112, 112, 16)
+block2a_project_bn (?, 56, 56, 24)
+block2b_project_bn (?, 56, 56, 24)
+block3a_project_bn (?, 28, 28, 40)
+block3b_project_bn (?, 28, 28, 40)
+block4a_project_bn (?, 14, 14, 80)
+block4b_project_bn (?, 14, 14, 80)
+block4c_project_bn (?, 14, 14, 80)
+block5a_project_bn (?, 14, 14, 112)
+block5b_project_bn (?, 14, 14, 112)
+block5c_project_bn (?, 14, 14, 112)
+block6a_project_bn (?, 7, 7, 192)
+block6b_project_bn (?, 7, 7, 192)
+block6c_project_bn (?, 7, 7, 192)
+block6d_project_bn (?, 7, 7, 192)
+block7a_project_bn (?, 7, 7, 320)
+```
+
+It seems that all the blocks end with batch normalization layers. I think this will be what the U-Net look like after construction:
+
+
+
+
 ## TODO
 
 @DONE check out the implementation provided in the [keras-applications repo](https://github.com/keras-team/keras-applications). Seems that this repo has code that's editable in terms of model architecture. Also, it looks much cleaner (?), without too many dependencies. Most of the functions seemed to be implmemented within that same file for efficientnet.
 
 
 @TODO Add skip connections and everything else to this model. Hopefully we'll get a trainable U-Net soon.
+
+- basically had a wrapper model, now only need to do skip connections and conv2d and upsampling
+
+@TODO check the efficientnet from Keras with the panda image above, making sure it actually has pre-trained weights
