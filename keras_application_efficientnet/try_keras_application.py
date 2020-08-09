@@ -11,7 +11,6 @@ def get_efficientnet(name='B0', input_shape=(None, None, 1)):
         input_tensor=None,
         input_shape=input_shape,
         pooling=None,
-        classes=1,
         backend=tf.keras.backend,
         layers=tf.keras.layers,
         models=tf.keras.models,
@@ -47,9 +46,10 @@ activation_maps = inter_model.predict(images)
 
 import matplotlib.pyplot as plt
 import os
+import random
 
 dev_tmp = r'./../tmp'
-ks = [0, 10, 20]
+ks = random.sample(range(activation_maps.shape[-1]), 10)
 for k in ks:
     plt.imshow(activation_maps[0, :, :, k])
     plt.savefig(os.path.join(dev_tmp, 'keras_3b_channel_%d__%s.png'%(k, input_name)))

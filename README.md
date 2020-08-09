@@ -308,4 +308,8 @@ It's hard to tell whether this proofs that the network is pre-trained or not... 
 
 - basically had a wrapper model, now only need to do skip connections and conv2d and upsampling
 
+- bottleneck done, did one upsampling and concatenation... I am following the U-Net, with 4 upsampling layers
+
+- also noticed that the layers should end at "dropout" in the encoder part
+
 @DONE check the efficientnet from Keras with the panda image above, making sure it actually has pre-trained weights
