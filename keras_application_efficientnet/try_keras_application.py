@@ -23,12 +23,35 @@ def efficientnet_unet(input_shape = (224,224,3)):
     encoder_model = get_efficientnet(name='B0', input_shape=input_shape)
     new_input = encoder_model.input
     new_output = encoder_model.output
-    print(type(new_input), type(new_output))
-
     efficient_unet = tf.keras.Model(inputs=new_input, outputs=new_output)
     return efficient_unet
 
-eunet = efficientnet_unet()
-eunet.summary()
+#eunet.summary()
 
+
+#input_name = 'panda'
+input_name = 'labrador'
+import imageio
+images = imageio.imread("%s.jpg"%input_name)
+images = np.reshape(images, (1, images.shape[0], images.shape[1], images.shape[2]))
+images = images.astype(np.float32)
+print(images.shape, images.dtype)
+
+
+eunet = efficientnet_unet(input_shape=images.shape[1:])
+
+layer_3b = eunet.get_layer(name='block3b_project_bn')
+inter_model = tf.keras.Model(inputs = eunet.input, outputs = layer_3b.output)
+activation_maps = inter_model.predict(images)
+
+
+import matplotlib.pyplot as plt
+import os
+
+dev_tmp = r'./../tmp'
+ks = [0, 10, 20]
+for k in ks:
+    plt.imshow(activation_maps[0, :, :, k])
+    plt.savefig(os.path.join(dev_tmp, 'keras_3b_channel_%d__%s.png'%(k, input_name)))
+    plt.clf()
 

@@ -10,7 +10,7 @@
    
    - EfficientNet B0 Architecture
 
-      ![B0](B0.png)
+      ![B0](figs/B0.png)
 
 ### Existing implementation
 
@@ -186,13 +186,9 @@ For the labrador image (original dimension 1400, 2100), the endpoints layers wil
 
 And these endpoints look pretty cool. Totally see the potential for segmentation/detection here.
 
-Activation map of the panda image after 2 max-pooling in efficient-net:
+Activation map (endpoitns) for the panda image and labrador image:
 
-![Panda Endpoint 2](tmp/panda_first_map_in_endpoint_2.png)
-
-Activation map of the labrador image after 2 max-pooling in efficient-net:
-
-![Labrador Endpont 3](tmp/labrador_first_map_in_endpoint_3.png)
+![map.png](figs/feature_panda_labrador.png)
 
 
 ### Using Pretrained EfficientNet from Keras applications
@@ -265,6 +261,42 @@ block7a_project_bn (?, 7, 7, 320)
 It seems that all the blocks end with batch normalization layers. I think this will be what the U-Net look like after construction:
 
 
+#### Verify the pre-trained weights are actaully pre-trained
+
+Let's look at the output after block3b_project_bn in the pre-trained network loaded from keras applications:
+
+![labrador_keras](tmp/keras_3b_channel_0__labrador.png)
+
+Code used
+
+```Python
+input_name = 'labrador'
+import imageio
+images = imageio.imread("%s.jpg"%input_name)
+images = np.reshape(images, (1, images.shape[0], images.shape[1], images.shape[2]))
+images = images.astype(np.float32)
+print(images.shape, images.dtype)
+
+
+eunet = efficientnet_unet(input_shape=images.shape[1:])
+
+layer_3b = eunet.get_layer(name='block3b_project_bn')
+inter_model = tf.keras.Model(inputs = eunet.input, outputs = layer_3b.output)
+activation_maps = inter_model.predict(images)
+
+
+import matplotlib.pyplot as plt
+import os
+
+dev_tmp = r'./../tmp'
+ks = [0, 10, 20]
+for k in ks:
+    plt.imshow(activation_maps[0, :, :, k])
+    plt.savefig(os.path.join(dev_tmp, 'keras_3b_channel_%d__%s.png'%(k, input_name)))
+    plt.clf()
+```
+
+It's hard to tell whether this proofs that the network is pre-trained or not... Because random weights also give images kind of like this.
 
 
 ## TODO
@@ -276,4 +308,4 @@ It seems that all the blocks end with batch normalization layers. I think this w
 
 - basically had a wrapper model, now only need to do skip connections and conv2d and upsampling
 
-@TODO check the efficientnet from Keras with the panda image above, making sure it actually has pre-trained weights
+@DONE check the efficientnet from Keras with the panda image above, making sure it actually has pre-trained weights
