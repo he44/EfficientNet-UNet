@@ -34,15 +34,23 @@
 
 ## Files and directory
 
-### scratch
+### archive/efficientnet
+
+Downloaded original author's repo to study the code
+
+### archive/scratch
 
 Trying to build the pre-trained network following [the repo](https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet) linked in the paper. 
 
 PS: almost all code in this directory are from the linked GitHub repo above. I checked out that folder only as svn and copied it here for easy testing. **test.py** contains the code I put together for testing.
 
-### keras_application_efficientnet
+### archive/keras_application_efficientnet
 
 Trying to build a trainable U-Net with EfficientNet as encoder. All files in keras_applications are from [Efficient Net implementation as part of keras-applications](https://github.com/keras-team/keras-applications).
+
+### efficientnet_unet
+
+Implementation of U-Net (EfficientNet as encoder) using pre-trained EfficientNet loaded from Keras application.
 
 
 ## Notes
@@ -298,13 +306,32 @@ for k in ks:
 
 It's hard to tell whether this proofs that the network is pre-trained or not... Because random weights also give images kind of like this.
 
+### Building U-Net with Efficient-Net as encoder
+
+- Bottleneck input: encoder model block7a (not using the top conv layer, which ahas over 1000 filters)
+
+- First upsampling and concatenation: with encoder model 5c, which is 14 x 14 x 112
+
+- Second upsampling and concatenation: with encoder model 3b, which is 28 x 28 x 40
+
+- Third upsampling and concatenation: with encoder model 2b, which is 56 x 56 x 24
+
+- Fourth upsampling and concatenation: with encoder model 1a (no project bn), which is 112 x 112 x 16
+
+- Fifth upsampling and concatenation: with encoder model input, which is 224 x 224 x 3, only layer with original shape
+    ( a bit weird, not the same as U-Net)
+
+Check efficientnet_unet/build_eunet.py
+
+![eunet](figs/eunet.png)
+
 
 ## TODO
 
 @DONE check out the implementation provided in the [keras-applications repo](https://github.com/keras-team/keras-applications). Seems that this repo has code that's editable in terms of model architecture. Also, it looks much cleaner (?), without too many dependencies. Most of the functions seemed to be implmemented within that same file for efficientnet.
 
 
-@TODO Add skip connections and everything else to this model. Hopefully we'll get a trainable U-Net soon.
+@DONE Add skip connections and everything else to this model. Hopefully we'll get a trainable U-Net soon.
 
 - basically had a wrapper model, now only need to do skip connections and conv2d and upsampling
 
@@ -313,3 +340,5 @@ It's hard to tell whether this proofs that the network is pre-trained or not... 
 - also noticed that the layers should end at "dropout" in the encoder part
 
 @DONE check the efficientnet from Keras with the panda image above, making sure it actually has pre-trained weights
+
+@TODO find some segmentation sets to test the model
