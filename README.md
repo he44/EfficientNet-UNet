@@ -325,6 +325,23 @@ Check efficientnet_unet/build_eunet.py
 
 ![eunet](figs/eunet.png)
 
+### Testing the Efficient-Net U-Net on a segmentation dataset
+
+So I looked through a few options:
+
+- [Cityscapes Dataset](https://www.cityscapes-dataset.com/)
+
+    - need a organization/school email address just for downloading. So this won't work out.
+
+- [COCO](https://cocodataset.org/#download)
+
+    - tryed downloading this using TensorFlow-datasets directly. Won't work because there's some issue unzipping the files.
+
+    - Also, the requirement on disk storage is also crazy
+
+- [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/)
+
+    - seems compact. Let' try this one first
 
 ## TODO
 
