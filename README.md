@@ -335,19 +335,16 @@ So I looked through a few options:
 
 - [COCO](https://cocodataset.org/#download)
 
-    - tryed downloading this using TensorFlow-datasets directly. Won't work because there's some issue unzipping the files.
+    - tried downloading this using TensorFlow-datasets directly. Won't work because there's some issue unzipping the files.
+    Also, the requirement on disk storage is also crazy
 
-    - Also, the requirement on disk storage is also crazy
+    - Downloading from [COCO website](https://cocodataset.org/#download) directly
 
-    - Downloading from COCO org website directly
+    - Figuring out the data format for segmentation (Panoptic?) Maybe use their API [pycoco](https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocoDemo.ipynb)
 
-    - Figuring out the data format for segmentation (Panoptic?) Maybe use their API
-
-        - [Data Formta](https://cocodataset.org/#format-data)
+        - [Data Format](https://cocodataset.org/#format-data)
 
 - [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/)
-
-    - seems compact. Let' try this one first
 
 ## TODO
 
