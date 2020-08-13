@@ -339,6 +339,12 @@ So I looked through a few options:
 
     - Also, the requirement on disk storage is also crazy
 
+    - Downloading from COCO org website directly
+
+    - Figuring out the data format for segmentation (Panoptic?) Maybe use their API
+
+        - [Data Formta](https://cocodataset.org/#format-data)
+
 - [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/)
 
     - seems compact. Let' try this one first
@@ -358,4 +364,6 @@ So I looked through a few options:
 
 @DONE check the efficientnet from Keras with the panda image above, making sure it actually has pre-trained weights
 
-@TODO find some segmentation sets to test the model
+@DONE find some segmentation sets to test the model
+
+@TODO understand how to use coco
