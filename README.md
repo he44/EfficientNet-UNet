@@ -363,4 +363,6 @@ So I looked through a few options:
 
 @DONE find some segmentation sets to test the model
 
-@TODO understand how to use coco
+@TODO Try ADE20K first, I changed my mind
+
+Checked out this segmentation list from [Richard Szeliski's book](http://szeliski.org/Book/)
